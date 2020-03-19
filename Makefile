@@ -19,7 +19,8 @@ export BASE_DIR=$(shell pwd)
 export QT_HOME=`pwd`/Qt
 export QT_VERSION=5.13.2
 export QT_VERSION_INSTALL=5132
-export QT_CI_PACKAGES=qt.qt5.${QT_VERSION_INSTALL}.ios,qt.qt5.${QT_VERSION_INSTALL}.qtcharts.ios,qt.qt5.${QT_VERSION_INSTALL}.qtcharts
+export QT_CI_PACKAGES=qt.qt5.${QT_VERSION_INSTALL}.clang_64,qt.qt5.${QT_VERSION_INSTALL}.qtcharts.clang_64,qt.qt5.${QT_VERSION_INSTALL}.qtcharts
+
 
 BREW_INSTALLED := $(shell eval which brew | wc -l	)
 TAP_INSTALLED := $(shell eval brew tap  | grep icn-team/hicn-tap | wc -l)
@@ -28,21 +29,21 @@ init:
 	@mkdir -p usr/lib && mkdir -p usr/include && mkdir -p src && mkdir -p qt
 
 init_qt:
-	@echo "ciao"
-	#@mkdir -p qt
-	#@if [ ! -d ${BASE_DIR}/qt/Qt ]; then \
-	#	if [ -z ${QT_CI_LOGIN} ] || [ -z ${QT_CI_PASSWORD} ]; then \
-	#		echo "QT_CI_LOGIN and/or QT_CI_PASSWORD not set."; \
-	#		echo "export QT_CI_LOGIN=<qt username>"; \
-	#		echo "export QT_CI_PASSWORD=<qt password>"; \
-	#		echo "If you don't have a qt account, please create a new one on:"; \
-	#		echo "https://login.qt.io/register"; \
-	#		exit 1; \
-	#	else \
-	#		cd qt && if [ ! -d qtci ]; then git clone https://github.com/benlau/qtci.git; fi && export PATH=`pwd`/qtci/bin:`pwd`/qtci/recipes:"${PATH}" && install-qt ${QT_VERSION} && rm qt-opensource* && rm -rf qtci && rm -rf Qt/MaintenanceTool.app && rm -rf Examples && rm -rf Docs && rm -rf Qt\ Creator.app; \
-	#	fi; \
-	#fi
+	@mkdir -p qt
+	@if [ ! -d ${BASE_DIR}/qt/Qt ]; then \
+		if [ -z ${QT_CI_LOGIN} ] || [ -z ${QT_CI_PASSWORD} ]; then \
+			echo "QT_CI_LOGIN and/or QT_CI_PASSWORD not set."; \
+			echo "export QT_CI_LOGIN=<qt username>"; \
+			echo "export QT_CI_PASSWORD=<qt password>"; \
+			echo "If you don't have a qt account, please create a new one on:"; \
+			echo "https://login.qt.io/register"; \
+			exit 1; \
+		else \
+			cd qt && if [ ! -d qtci ]; then git clone https://github.com/benlau/qtci.git; fi && export PATH=`pwd`/qtci/bin:`pwd`/qtci/recipes:"${PATH}" && install-qt ${QT_VERSION} && rm -rf qtci && rm -rf Qt/MaintenanceTool.app && rm -rf Qt/Examples && rm -rf Qt/Docs && rm -rf Qt\ Creator.app; rm qt-opensource*; \
+		fi; \
+	fi
 
+#rm qt-opensource* &&
 install_hicn_tap:
 	@if [ ${BREW_INSTALLED} -eq 1 ] && [ ${TAP_INSTALLED} -ne 0 ]; then \
 		brew install hicn; \
@@ -91,17 +92,18 @@ download_curl: init
 curl_src: download_curl
 	@mkdir -p build/curl && cd build/curl && cmake ${BASE_DIR}/src/curl  -DCMAKE_FIND_ROOT_PATH=${BASE_DIR}/usr  -DCMAKE_INSTALL_PREFIX=${BASE_DIR}/usr -DOPENSSL_ROOT_DIR=${BASE_DIR}/usr -DBUILD_CURL_EXE=OFF -DBUILD_TESTING=OFF && make -j && make install
 
-#download_ffmpeg: init
-#	@cd ${BASE_DIR}/src && if [ ! -d ffmpeg ]; then if [ ! -f ffmpeg-4.2-iOS-lite.tar.gz ]; then echo "ffmpeg not found"; wget https://iweb.dl.sourceforge.net/project/avbuild/iOS/ffmpeg-4.2-iOS-lite.tar.xz; fi; tar xf ffmpeg-4.2-iOS-lite.tar.xz; rm -rf ffmpeg-4.2-iOS-lite.tar.xz; mv ffmpeg-4.2-iOS-lite ffmpeg; fi;
 
-#ffmpeg: download_ffmpeg
-#	@if [ ! -d ${BASE_DIR}/usr/include/libavcodec ] || [ ! -d ${BASE_DIR}/usr/include/libavfilter ] || [ ! -d ${BASE_DIR}/usr/include/libswresample ] || [ ! -d ${BASE_DIR}/usr/include/libavformat ] || [ ! -d ${BASE_DIR}/usr/include/libavutil ] || [ ! -d ${BASE_DIR}/usr/include/libswscale ]; then cp -rf ${BASE_DIR}/src/ffmpeg/include/* ${BASE_DIR}/usr/include/ ; cp -rf ${BASE_DIR}/src/ffmpeg/lib/* ${BASE_DIR}/usr/lib/; fi;
+download_ffmpeg: init
+	@cd ${BASE_DIR}/src && if [ ! -d ffmpeg ]; then if [ ! -f ffmpeg-4.2-macOS-lite.tar.gz ]; then echo "ffmpeg not found"; wget https://sourceforge.net/projects/avbuild/files/macOS/ffmpeg-4.2-macOS-lite.tar.xz; fi; tar xf ffmpeg-4.2-macOS-lite.tar.xz; rm -rf ffmpeg-4.2-macOS-lite.tar.xz; mv ffmpeg-4.2-macOS-lite ffmpeg; fi;
+
+ffmpeg_src: download_ffmpeg
+	@if [ ! -d ${BASE_DIR}/usr/include/libavcodec ] || [ ! -d ${BASE_DIR}/usr/include/libavfilter ] || [ ! -d ${BASE_DIR}/usr/include/libswresample ] || [ ! -d ${BASE_DIR}/usr/include/libavformat ] || [ ! -d ${BASE_DIR}/usr/include/libavutil ] || [ ! -d ${BASE_DIR}/usr/include/libswscale ]; then cp -rf ${BASE_DIR}/src/ffmpeg/include/* ${BASE_DIR}/usr/include/ ; cp -rf ${BASE_DIR}/src/ffmpeg/lib/* ${BASE_DIR}/usr/lib/; fi;
 
 download_qtav: init
-	@cd ${BASE_DIR}/src && if [ ! -d QtAV ]; then echo "qtav not found"; git clone https://github.com/wang-bin/QtAV.git; cd QtAV; git checkout 0307c174a4197fd33b1c1e7d37406d1ee5df6c82; git submodule update --init; sed -i '' 's/\/usr\/share\/doc/.\/usr\/share\/doc/' deploy.pri; echo "INCLUDEPATH = ${BASE_DIR}/usr/include/" > .qmake.conf; echo "LIBS = -L${BASE_DIR}/usr/lib/" >> .qmake.conf; fi;
+	@cd ${BASE_DIR}/src && if [ ! -d QtAV ]; then echo "qtav not found"; git clone https://github.com/wang-bin/QtAV.git; cd QtAV; git checkout 0307c174a4197fd33b1c1e7d37406d1ee5df6c82; git submodule update --init; echo "INCLUDEPATH = ${BASE_DIR}/usr/include/" > .qmake.conf; echo "LIBS = -L${BASE_DIR}/usr/lib/" >> .qmake.conf; fi;
 
-qtav: download_qtav
-	@mkdir -p ${BASE_DIR}/build/qtav && cd ${BASE_DIR}/build/qtav && ${BASE_DIR}/qt/Qt/${QT_VERSION}/ios/bin/qmake ${BASE_DIR}/src/QtAV "target.path = ${BASE_DIR}/qt/Qt/5.13.2/ios" "CONFIG+=no-examples release" "share.path=${BASE_DIR}/qt/doc" && make && make install && bash sdk_install.sh
+qtav_src: download_qtav
+	@mkdir -p ${BASE_DIR}/build/qtav && cd ${BASE_DIR}/build/qtav && ${BASE_DIR}/qt/Qt/${QT_VERSION}/clang_64/bin/qmake ${BASE_DIR}/src/QtAV "target.path = ${BASE_DIR}/qt/Qt/5.13.2/clang_64" "CONFIG+=no-examples release" "share.path=${BASE_DIR}/qt/doc" && make && make install && bash sdk_install.sh
 	
 update_hicn: init
 	@if [ -d ${BASE_DIR}/src/hicn ]; then cd ${BASE_DIR}/src/hicn; git pull; fi;
@@ -111,8 +113,6 @@ download_viper: init
 
 libdash_src: download_viper
 	@mkdir -p build/libdash && cd build/libdash && cmake ${BASE_DIR}/src/viper/libdash -DCMAKE_FIND_ROOT_PATH=${BASE_DIR}/usr  -DCMAKE_INSTALL_PREFIX=${BASE_DIR}/usr && make -j && make install
-
-
 
 update_libparc: init
 	@if [ -d ${BASE_DIR}/src/cframework ]; then cd ${BASE_DIR}/src/cframework; git pull; fi;
