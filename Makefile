@@ -121,6 +121,8 @@ update: update_libparc update_hicn
 
 all: openssl libevent libconfig asio libparc hicn
 
+all_src: openssl_src libevent_src libconfig_src asio_src libparc_src hicn_src
+
 qt_dep: init_qt ffmpeg qtav curl libdash
 
 all_qt: qt_dep all
