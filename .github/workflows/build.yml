@@ -25,6 +25,8 @@ jobs:
     # Runs a set of commands using the runners shell
     - name: Run a multi-line script
       run: |
-        brew tap icn-team/hicn-tap
-        brew install hicn
+        #brew tap icn-team/hicn-tap
+        #brew install hicn
+        export QT_CI_LOGIN=${{secrets.QT_CI_LOGIN}}
+        export QT_CI_PASSWORD=${{secrets.QT_CI_PASSWORD}}
         make all_qt_src
