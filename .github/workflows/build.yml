@@ -29,4 +29,4 @@ jobs:
         #brew install hicn
         export QT_CI_LOGIN=${{secrets.QT_CI_LOGIN}}
         export QT_CI_PASSWORD=${{secrets.QT_CI_PASSWORD}}
-        make all_qt_src
+        make all_src
