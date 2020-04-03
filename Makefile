@@ -53,7 +53,7 @@ openssl_download: init
 	@cd src && if [ ! -d openssl ]; then if [ ! -f openssl-1.1.1f.tar.gz ]; then wget https://www.openssl.org/source/openssl-1.1.1f.tar.gz; fi;  tar xf openssl-1.1.1f.tar.gz && mv openssl-1.1.1f openssl && rm -rf openssl-1.1.1f.tar.gz; fi
 
 openssl_src: openssl_download
-	@if [ ! -d ${BASE_DIR}/include/openssl ]; then mkdir -p build/openssl && cd build/openssl && ${BASE_DIR}/src/openssl/Configure --prefix=${BASE_DIR}/usr --openssldir=${BASE_DIR}/src/openssl/ no-ssl3 no-ssl3-method no-zlib  darwin64-x86_64-cc enable-ec_nistp_64_gcc_128 && make -j && make install; fi;
+	@if [ ! -d ${BASE_DIR}/usr/include/openssl ]; then echo "openssl not found"; mkdir -p build/openssl && cd build/openssl && ${BASE_DIR}/src/openssl/Configure --prefix=${BASE_DIR}/usr --openssldir=${BASE_DIR}/src/openssl/ no-ssl3 no-ssl3-method no-zlib  darwin64-x86_64-cc enable-ec_nistp_64_gcc_128 && make -j && make install; fi;
 
 openssl: init
 	@brew install openssl@1.1
@@ -134,7 +134,7 @@ download_viper: init
 	@cd ${BASE_DIR}/src && if [ ! -d viper ]; then echo "viper not found"; git clone https://github.com/FDio/cicn.git -b viper/master viper;  fi;
 
 libdash_src: download_viper
-	@mkdir -p build/libdash && cd build/libdash && cmake ${BASE_DIR}/src/viper/libdash -DCMAKE_FIND_ROOT_PATH=${BASE_DIR}/usr  -DCMAKE_INSTALL_PREFIX=${BASE_DIR}/usr && make -j && make install
+	@mkdir -p build/libdash && cd build/libdash && cmake ${BASE_DIR}/src/viper/libdash -DCMAKE_FIND_ROOT_PATH=${BASE_DIR}/usr -DCURL_NO_CURL_CMAKE=ON -DCMAKE_INSTALL_PREFIX=${BASE_DIR}/usr && make -j && make install
 
 update_libparc_src: init
 	@if [ -d ${BASE_DIR}/src/cframework ]; then cd ${BASE_DIR}/src/cframework; git pull; fi;
