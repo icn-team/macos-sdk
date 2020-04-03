@@ -54,6 +54,8 @@ openssl_download: init
 
 openssl_src: openssl_download
 	@if [ ! -d ${BASE_DIR}/usr/include/openssl ]; then echo "openssl not found"; mkdir -p build/openssl && cd build/openssl && ${BASE_DIR}/src/openssl/Configure --prefix=${BASE_DIR}/usr --openssldir=${BASE_DIR}/src/openssl/ no-ssl3 no-ssl3-method no-zlib  darwin64-x86_64-cc enable-ec_nistp_64_gcc_128 && make -j && make install; fi;
+	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libssl.1.1.dylib
+	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libcrypto.1.1.dylib
 
 openssl: init
 	@brew install openssl@1.1
@@ -63,6 +65,11 @@ download_libevent: init
 
 libevent_src: download_libevent
 	@mkdir -p build/libevent && cd build/libevent && cmake ${BASE_DIR}/src/libevent -DCMAKE_FIND_ROOT_PATH=${BASE_DIR}/usr -DCMAKE_INSTALL_PREFIX=${BASE_DIR}/usr -DOPENSSL_ROOT_DIR=${BASE_DIR}/usr -DEVENT__DISABLE_TESTS=ON -DEVENT__DISABLE_SAMPLES=ON -DEVENT__HAVE_EPOLL=OFF -DEVENT__HAVE_PIPE2=OFF -DEVENT__DISABLE_BENCHMARK=ON && make -j && make -j && make install
+	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libevent.dylib
+	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libevent_core.dylib
+	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libevent_extra.dylib
+	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libevent_openssl.dylib
+	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libevent_pthreads.dylib
 
 libevent: init
 	@brew install libevent
@@ -72,6 +79,7 @@ download_libparc: init
 
 libparc_src: download_libparc
 	@mkdir -p build/libparc && cd build/libparc && cmake ${BASE_DIR}/src/cframework/libparc -DCMAKE_FIND_ROOT_PATH=${BASE_DIR}/usr -DCMAKE_INSTALL_PREFIX=${BASE_DIR}/usr -DOPENSSL_ROOT_DIR=${BASE_DIR}/usr -DDISABLE_EXECUTABLES=ON && make -j && make install
+	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libparc.dylib
 
 libparc: init
 	@brew install libparc
@@ -81,6 +89,8 @@ download_libconfig: init
 
 libconfig_src: download_libconfig
 	@mkdir -p build/libconfig && cd build/libconfig && cmake ${BASE_DIR}/src/libconfig/ -DCMAKE_FIND_ROOT_PATH=${BASE_DIR}/usr -DCMAKE_INSTALL_PREFIX=${BASE_DIR}/usr -DBUILD_EXAMPLES=OFF -DBUILD_TESTS=OFF && make -j && make -j && make install
+	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libconfig++.dylib
+	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libconfig.dylib
 
 libconfig:
 	@brew install libconfig
@@ -99,6 +109,8 @@ download_hicn: init
 
 hicn_src: download_hicn
 	@mkdir -p build/hicn/OS64 && cd build/hicn/OS64 && cmake ${BASE_DIR}/src/hicn -DCMAKE_FIND_ROOT_PATH=${BASE_DIR}/usr  -DCMAKE_INSTALL_PREFIX=${BASE_DIR}/usr -DOPENSSL_ROOT_DIR=${BASE_DIR}/usr -DDISABLE_EXECUTABLES=ON && make -j && make install
+	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libhicn.dylib
+	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libhicntransport.dylib
 
 hicn: init
 	@brew install hicn
@@ -108,6 +120,7 @@ download_curl: init
 
 curl_src: download_curl openssl_src
 	@mkdir -p build/curl && cd build/curl && cmake ${BASE_DIR}/src/curl  -DCMAKE_FIND_ROOT_PATH=${BASE_DIR}/usr  -DCMAKE_INSTALL_PREFIX=${BASE_DIR}/usr -DOPENSSL_ROOT_DIR=${BASE_DIR}/usr -DBUILD_CURL_EXE=OFF -DBUILD_TESTING=OFF && make -j && make install
+	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libcurl.dylib
 
 curl: init openssl
 	brew install curl
@@ -135,6 +148,7 @@ download_viper: init
 
 libdash_src: download_viper
 	@mkdir -p build/libdash && cd build/libdash && cmake ${BASE_DIR}/src/viper/libdash -DCMAKE_FIND_ROOT_PATH=${BASE_DIR}/usr -DCURL_NO_CURL_CMAKE=ON -DCMAKE_INSTALL_PREFIX=${BASE_DIR}/usr && make -j && make install
+	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libdash.dylib	
 
 update_libparc_src: init
 	@if [ -d ${BASE_DIR}/src/cframework ]; then cd ${BASE_DIR}/src/cframework; git pull; fi;
@@ -152,6 +166,7 @@ qt_dep: init_qt ffmpeg qtav_src curl libdash_src
 all_qt_src: qt_dep_src all_src
 
 all_qt: qt_dep all
+
 
 help:
 	@echo "---- Basic build targets ----"
