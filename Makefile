@@ -50,7 +50,7 @@ install_hicn_tap:
 	fi
 
 openssl_download: init
-	@cd src && if [ ! -d openssl ]; then if [ ! -f openssl-1.1.1e.tar.gz ]; then wget https://www.openssl.org/source/openssl-1.1.1e.tar.gz; fi;  tar xf openssl-1.1.1e.tar.gz && mv openssl-1.1.1e openssl && rm -rf openssl-1.1.1e.tar.gz; fi
+	@cd src && if [ ! -d openssl ]; then if [ ! -f openssl-1.1.1f.tar.gz ]; then wget https://www.openssl.org/source/openssl-1.1.1f.tar.gz; fi;  tar xf openssl-1.1.1f.tar.gz && mv openssl-1.1.1f openssl && rm -rf openssl-1.1.1f.tar.gz; fi
 
 openssl_src: openssl_download
 	@if [ ! -d ${BASE_DIR}/include/openssl ]; then mkdir -p build/openssl && cd build/openssl && ${BASE_DIR}/src/openssl/Configure --prefix=${BASE_DIR}/usr --openssldir=${BASE_DIR}/src/openssl/ no-ssl3 no-ssl3-method no-zlib  darwin64-x86_64-cc enable-ec_nistp_64_gcc_128 && make -j && make install; fi;
