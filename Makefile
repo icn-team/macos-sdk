@@ -43,6 +43,8 @@ init_qt:
 		fi; \
 	fi
 
+init_hicn_tap:
+	@brew info hicn; if [ $$? != 0 ]; then brew tap icn-team/hicn-tap; fi
 
 install_hicn_tap:
 	@if [ ${BREW_INSTALLED} -eq 1 ] && [ ${TAP_INSTALLED} -ne 0 ]; then \
@@ -88,7 +90,7 @@ libevent: init
 	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libevent_openssl-2.1.7.dylib
 	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libevent_pthreads-2.1.7.dylib
 
-download_libparc: init
+download_libparc: init init_hicn_tap
 	@cd ${BASE_DIR}/src && if [ ! -d cframework ]; then echo "cframework not found"; git clone -b cframework/master https://gerrit.fd.io/r/cicn cframework; fi;
 
 libparc_src: download_libparc
@@ -136,7 +138,7 @@ hicn_src: download_hicn
 	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libhicn.dylib
 	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libhicntransport.dylib
 
-hicn: init
+hicn: init init_hicn_tap
 	@brew install hicn
 	@cp -f /usr/local/lib/libhicn* ${BASE_DIR}/usr/lib/
 	@cp -rf /usr/local/include/hicn* ${BASE_DIR}/usr/include/
@@ -164,7 +166,7 @@ download_ffmpeg: init
 	@cd ${BASE_DIR}/src && if [ ! -d ffmpeg ]; then if [ ! -f ffmpeg-4.2-macOS-lite.tar.gz ]; then echo "ffmpeg not found"; wget https://sourceforge.net/projects/avbuild/files/macOS/ffmpeg-4.2-macOS-lite.tar.xz; fi; tar xf ffmpeg-4.2-macOS-lite.tar.xz; rm -rf ffmpeg-4.2-macOS-lite.tar.xz; mv ffmpeg-4.2-macOS-lite ffmpeg; fi;
 
 ffmpeg_src: download_ffmpeg
-	@if [ ! -d ${BASE_DIR}/usr/include/libavcodec ] || [ ! -d ${BASE_DIR}/usr/include/libavfilter ] || [ ! -d ${BASE_DIR}/usr/include/libswresample ] || [ ! -d ${BASE_DIR}/usr/include/libavformat ] || [ ! -d ${BASE_DIR}/usr/include/libavutil ] || [ ! -d ${BASE_DIR}/usr/include/libswscale ]; then cp -rf ${BASE_DIR}/src/ffmpeg/include/* ${BASE_DIR}/usr/include/ ; cp -f ${BASE_DIR}/src/ffmpeg/lib/* ${BASE_DIR}/usr/lib/; fi;
+	@if [ ! -d ${BASE_DIR}/usr/include/libavcodec ] || [ ! -d ${BASE_DIR}/usr/include/libavfilter ] || [ ! -d ${BASE_DIR}/usr/include/libswresample ] || [ ! -d ${BASE_DIR}/usr/include/libavformat ] || [ ! -d ${BASE_DIR}/usr/include/libavutil ] || [ ! -d ${BASE_DIR}/usr/include/libswscale ]; then cp -rf ${BASE_DIR}/src/ffmpeg/include/* ${BASE_DIR}/usr/include/ ; cp -f ${BASE_DIR}/src/ffmpeg/lib/lib* ${BASE_DIR}/usr/lib/; fi;
 
 ffmpeg: init
 	@brew install ffmpeg
@@ -177,8 +179,7 @@ ffmpeg: init
 	@for f in $(shell ls -1 ${BASE_DIR}/usr/lib/libav*.dylib); do bash ${BASE_DIR}/scripts/script.sh $${f}; done
 	@for f in $(shell ls -1 ${BASE_DIR}/usr/lib/libsw*.dylib); do bash ${BASE_DIR}/scripts/script.sh $${f}; done
 
-test:
-	@for f in $(shell ls -1 ${BASE_DIR}/usr/lib/); do echo $${f}; done
+
 download_qtav: init
 	@cd ${BASE_DIR}/src && if [ ! -d QtAV ]; then echo "qtav not found"; git clone https://github.com/wang-bin/QtAV.git; cd QtAV; git checkout 768dbd6ff2c9994cc10f2dc9b7764a8cca417e9e; git submodule update --init; echo "INCLUDEPATH = ${BASE_DIR}/usr/include/" >> .qmake.conf; echo "LIBS = -L${BASE_DIR}/usr/lib/" >> .qmake.conf; fi;
 
