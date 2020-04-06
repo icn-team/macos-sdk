@@ -53,26 +53,40 @@ openssl_download: init
 	@cd src && if [ ! -d openssl ]; then if [ ! -f openssl-1.1.1f.tar.gz ]; then wget https://www.openssl.org/source/openssl-1.1.1f.tar.gz; fi;  tar xf openssl-1.1.1f.tar.gz && mv openssl-1.1.1f openssl && rm -rf openssl-1.1.1f.tar.gz; fi
 
 openssl_src: openssl_download
-	@if [ ! -d ${BASE_DIR}/usr/include/openssl ]; then echo "openssl not found"; mkdir -p build/openssl && cd build/openssl && ${BASE_DIR}/src/openssl/Configure --prefix=${BASE_DIR}/usr --openssldir=${BASE_DIR}/src/openssl/ no-ssl3 no-ssl3-method no-zlib  darwin64-x86_64-cc enable-ec_nistp_64_gcc_128 && make -j && make install; fi;
+	@if [ ! -d ${BASE_DIR}/usr/include/openssl ]; then echo "openssl not found"; mkdir -p build/openssl && cd build/openssl && ${BASE_DIR}/src/openssl/Configure --prefix=${BASE_DIR}/usr --openssldir=${BASE_DIR}/src/openssl/ no-ssl3 no-ssl3-method no-zlib  darwin64-x86_64-cc enable-ec_nistp_64_gcc_128 && make -j && make install_sw; fi;
 	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libssl.1.1.dylib
 	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libcrypto.1.1.dylib
 
 openssl: init
 	@brew install openssl@1.1
+	@cp -f /usr/local/opt/openssl@1.1/lib/lib* ${BASE_DIR}/usr/lib/
+	@cp -rf /usr/local/opt/openssl@1.1/include/openssl ${BASE_DIR}/usr/include/
+	@chmod 755 ${BASE_DIR}/usr/lib/libcrypto*
+	@chmod 755 ${BASE_DIR}/usr/lib/libssl*
+	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libssl.1.1.dylib
+	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libcrypto.1.1.dylib
 
 download_libevent: init
 	@cd ${BASE_DIR}/src && if [ ! -d libevent ]; then echo "libevent not found"; git clone https://github.com/libevent/libevent.git; cd libevent; git checkout tags/release-2.1.11-stable; fi;
 
 libevent_src: download_libevent
 	@mkdir -p build/libevent && cd build/libevent && cmake ${BASE_DIR}/src/libevent -DCMAKE_FIND_ROOT_PATH=${BASE_DIR}/usr -DCMAKE_INSTALL_PREFIX=${BASE_DIR}/usr -DOPENSSL_ROOT_DIR=${BASE_DIR}/usr -DEVENT__DISABLE_TESTS=ON -DEVENT__DISABLE_SAMPLES=ON -DEVENT__HAVE_EPOLL=OFF -DEVENT__HAVE_PIPE2=OFF -DEVENT__DISABLE_BENCHMARK=ON && make -j && make -j && make install
-	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libevent.dylib
-	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libevent_core.dylib
-	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libevent_extra.dylib
-	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libevent_openssl.dylib
-	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libevent_pthreads.dylib
+	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libevent-2.1.7.dylib
+	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libevent_core-2.1.7.dylib
+	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libevent_extra-2.1.7.dylib
+	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libevent_openssl-2.1.7.dylib
+	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libevent_pthreads-2.1.7.dylib
 
 libevent: init
 	@brew install libevent
+	@cp -f /usr/local/lib/libevent* ${BASE_DIR}/usr/lib/
+	@cp -rf /usr/local/include/event* ${BASE_DIR}/usr/include/
+	@chmod 755 ${BASE_DIR}/usr/lib/libevent*
+	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libevent-2.1.7.dylib
+	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libevent_core-2.1.7.dylib
+	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libevent_extra-2.1.7.dylib
+	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libevent_openssl-2.1.7.dylib
+	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libevent_pthreads-2.1.7.dylib
 
 download_libparc: init
 	@cd ${BASE_DIR}/src && if [ ! -d cframework ]; then echo "cframework not found"; git clone -b cframework/master https://gerrit.fd.io/r/cicn cframework; fi;
@@ -83,6 +97,10 @@ libparc_src: download_libparc
 
 libparc: init
 	@brew install libparc
+	@cp -f /usr/local/lib/libparc* ${BASE_DIR}/usr/lib/
+	@cp -rf /usr/local/include/parc ${BASE_DIR}/usr/include/
+	@chmod 755 ${BASE_DIR}/usr/lib/libparc*
+	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libparc.dylib
 
 download_libconfig: init
 	@cd ${BASE_DIR}/src && if [ ! -d libconfig ]; then echo "libconfig not found"; git clone https://github.com/hyperrealm/libconfig.git; cd libconfig; git checkout a6b370e78578f5bf594f8efe0802cdc9b9d18f1a; fi;
@@ -94,6 +112,11 @@ libconfig_src: download_libconfig
 
 libconfig:
 	@brew install libconfig
+	@cp -f /usr/local/lib/libconfig* ${BASE_DIR}/usr/lib/
+	@cp -rf /usr/local/include/libconfig* ${BASE_DIR}/usr/include/
+	@chmod 755 ${BASE_DIR}/usr/lib/libconfig*
+	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libconfig++.dylib
+	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libconfig.dylib
 
 download_asio: init
 	@cd ${BASE_DIR}/src && if [ ! -d asio ]; then echo "Asio directory not found"; git clone https://github.com/chriskohlhoff/asio.git; cd asio; git checkout tags/asio-1-12-2;	fi;
@@ -103,37 +126,59 @@ asio_src: download_asio
 
 asio: init
 	@brew install asio
+	@cp -rf /usr/local/include/asio* ${BASE_DIR}/usr/include/
 
 download_hicn: init
 	@cd ${BASE_DIR}/src && if [ ! -d hicn ]; then echo "libhicn not found"; git clone https://github.com/FDio/hicn.git; fi;
 
 hicn_src: download_hicn
-	@mkdir -p build/hicn/OS64 && cd build/hicn/OS64 && cmake ${BASE_DIR}/src/hicn -DCMAKE_FIND_ROOT_PATH=${BASE_DIR}/usr  -DCMAKE_INSTALL_PREFIX=${BASE_DIR}/usr -DOPENSSL_ROOT_DIR=${BASE_DIR}/usr -DDISABLE_EXECUTABLES=ON && make -j && make install
+	@mkdir -p build/hicn && cd build/hicn && cmake ${BASE_DIR}/src/hicn -DCMAKE_FIND_ROOT_PATH=${BASE_DIR}/usr  -DCMAKE_INSTALL_PREFIX=${BASE_DIR}/usr -DOPENSSL_ROOT_DIR=${BASE_DIR}/usr -DDISABLE_EXECUTABLES=ON && make -j && make install
 	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libhicn.dylib
 	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libhicntransport.dylib
 
 hicn: init
 	@brew install hicn
+	@cp -f /usr/local/lib/libhicn* ${BASE_DIR}/usr/lib/
+	@cp -rf /usr/local/include/hicn* ${BASE_DIR}/usr/include/
+	@chmod 755 ${BASE_DIR}/usr/lib/libhicn*
+	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libhicn.dylib
+	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libhicntransport.dylib
 
 download_curl: init
 	@cd ${BASE_DIR}/src && if [ ! -d curl ]; then echo "curl not found"; git clone https://github.com/curl/curl.git; cd curl; git checkout tags/curl-7_66_0; fi;
 
 curl_src: download_curl openssl_src
 	@mkdir -p build/curl && cd build/curl && cmake ${BASE_DIR}/src/curl  -DCMAKE_FIND_ROOT_PATH=${BASE_DIR}/usr  -DCMAKE_INSTALL_PREFIX=${BASE_DIR}/usr -DOPENSSL_ROOT_DIR=${BASE_DIR}/usr -DBUILD_CURL_EXE=OFF -DBUILD_TESTING=OFF && make -j && make install
-	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libcurl.dylib
+	@mv -f ${BASE_DIR}/usr/lib/libcurl.dylib ${BASE_DIR}/usr/lib/libcurl.4.dylib
+	@ln -s ${BASE_DIR}/usr/lib/libcurl.4.dylib ${BASE_DIR}/usr/lib/libcurl.dylib
+	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libcurl.4.dylib
 
 curl: init openssl
 	brew install curl
+	@cp -f /usr/local/opt/curl/lib/lib* ${BASE_DIR}/usr/lib/
+	@cp -rf /usr/local/include/curl* ${BASE_DIR}/usr/include/
+	@chmod 755 ${BASE_DIR}/usr/lib/libcurl*
+	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libcurl.4.dylib
 
 download_ffmpeg: init
 	@cd ${BASE_DIR}/src && if [ ! -d ffmpeg ]; then if [ ! -f ffmpeg-4.2-macOS-lite.tar.gz ]; then echo "ffmpeg not found"; wget https://sourceforge.net/projects/avbuild/files/macOS/ffmpeg-4.2-macOS-lite.tar.xz; fi; tar xf ffmpeg-4.2-macOS-lite.tar.xz; rm -rf ffmpeg-4.2-macOS-lite.tar.xz; mv ffmpeg-4.2-macOS-lite ffmpeg; fi;
 
 ffmpeg_src: download_ffmpeg
-	@if [ ! -d ${BASE_DIR}/usr/include/libavcodec ] || [ ! -d ${BASE_DIR}/usr/include/libavfilter ] || [ ! -d ${BASE_DIR}/usr/include/libswresample ] || [ ! -d ${BASE_DIR}/usr/include/libavformat ] || [ ! -d ${BASE_DIR}/usr/include/libavutil ] || [ ! -d ${BASE_DIR}/usr/include/libswscale ]; then cp -rf ${BASE_DIR}/src/ffmpeg/include/* ${BASE_DIR}/usr/include/ ; cp -rf ${BASE_DIR}/src/ffmpeg/lib/* ${BASE_DIR}/usr/lib/; fi;
+	@if [ ! -d ${BASE_DIR}/usr/include/libavcodec ] || [ ! -d ${BASE_DIR}/usr/include/libavfilter ] || [ ! -d ${BASE_DIR}/usr/include/libswresample ] || [ ! -d ${BASE_DIR}/usr/include/libavformat ] || [ ! -d ${BASE_DIR}/usr/include/libavutil ] || [ ! -d ${BASE_DIR}/usr/include/libswscale ]; then cp -rf ${BASE_DIR}/src/ffmpeg/include/* ${BASE_DIR}/usr/include/ ; cp -f ${BASE_DIR}/src/ffmpeg/lib/* ${BASE_DIR}/usr/lib/; fi;
 
 ffmpeg: init
 	@brew install ffmpeg
+	@cp -f /usr/local/lib/libav* ${BASE_DIR}/usr/lib/
+	@cp -f /usr/local/lib/libsw* ${BASE_DIR}/usr/lib/
+	@cp -rf /usr/local/include/libav* ${BASE_DIR}/usr/include/
+	@cp -rf /usr/local/include/libsw* ${BASE_DIR}/usr/include/
+	@chmod 755 ${BASE_DIR}/usr/lib/libav*
+	@chmod 755 ${BASE_DIR}/usr/lib/libsw*
+	@for f in $(shell ls -1 ${BASE_DIR}/usr/lib/libav*.dylib); do bash ${BASE_DIR}/scripts/script.sh $${f}; done
+	@for f in $(shell ls -1 ${BASE_DIR}/usr/lib/libsw*.dylib); do bash ${BASE_DIR}/scripts/script.sh $${f}; done
 
+test:
+	@for f in $(shell ls -1 ${BASE_DIR}/usr/lib/); do echo $${f}; done
 download_qtav: init
 	@cd ${BASE_DIR}/src && if [ ! -d QtAV ]; then echo "qtav not found"; git clone https://github.com/wang-bin/QtAV.git; cd QtAV; git checkout 768dbd6ff2c9994cc10f2dc9b7764a8cca417e9e; git submodule update --init; echo "INCLUDEPATH = ${BASE_DIR}/usr/include/" >> .qmake.conf; echo "LIBS = -L${BASE_DIR}/usr/lib/" >> .qmake.conf; fi;
 
@@ -148,7 +193,7 @@ download_viper: init
 
 libdash_src: download_viper
 	@mkdir -p build/libdash && cd build/libdash && cmake ${BASE_DIR}/src/viper/libdash -DCMAKE_FIND_ROOT_PATH=${BASE_DIR}/usr -DCURL_NO_CURL_CMAKE=ON -DCMAKE_INSTALL_PREFIX=${BASE_DIR}/usr && make -j && make install
-	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libdash.dylib	
+	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libdash.dylib
 
 update_libparc_src: init
 	@if [ -d ${BASE_DIR}/src/cframework ]; then cd ${BASE_DIR}/src/cframework; git pull; fi;
@@ -166,7 +211,6 @@ qt_dep: init_qt ffmpeg qtav_src curl libdash_src
 all_qt_src: qt_dep_src all_src
 
 all_qt: qt_dep all
-
 
 help:
 	@echo "---- Basic build targets ----"
