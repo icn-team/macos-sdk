@@ -158,7 +158,7 @@ curl_src: download_curl openssl_src
 curl: init openssl
 	brew install curl
 	@cp -f /usr/local/opt/curl/lib/lib* ${BASE_DIR}/usr/lib/
-	@cp -rf /usr/local/include/curl* ${BASE_DIR}/usr/include/
+	@cp -rf /usr/local/opt/curl/curl* ${BASE_DIR}/usr/include/
 	@chmod 755 ${BASE_DIR}/usr/lib/libcurl*
 	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libcurl.4.dylib
 
