@@ -44,7 +44,7 @@ init_qt:
 	fi
 
 init_hicn_tap:
-	@brew info hicn; if [ $$? != 0 ]; then brew tap icn-team/hicn-tap; fi
+	@brew info hicn; if [ $$? != 0 ]; then echo "not present!"; brew tap icn-team/hicn-tap; fi
 
 install_hicn_tap:
 	@if [ ${BREW_INSTALLED} -eq 1 ] && [ ${TAP_INSTALLED} -ne 0 ]; then \
@@ -90,14 +90,14 @@ libevent: init
 	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libevent_openssl-2.1.7.dylib
 	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libevent_pthreads-2.1.7.dylib
 
-download_libparc: init init_hicn_tap
+download_libparc: init
 	@cd ${BASE_DIR}/src && if [ ! -d cframework ]; then echo "cframework not found"; git clone -b cframework/master https://gerrit.fd.io/r/cicn cframework; fi;
 
 libparc_src: download_libparc
 	@mkdir -p build/libparc && cd build/libparc && cmake ${BASE_DIR}/src/cframework/libparc -DCMAKE_FIND_ROOT_PATH=${BASE_DIR}/usr -DCMAKE_INSTALL_PREFIX=${BASE_DIR}/usr -DOPENSSL_ROOT_DIR=${BASE_DIR}/usr -DDISABLE_EXECUTABLES=ON && make -j && make install
 	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libparc.dylib
 
-libparc: init
+libparc: init init_hicn_tap
 	@brew install libparc
 	@cp -f /usr/local/lib/libparc* ${BASE_DIR}/usr/lib/
 	@cp -rf /usr/local/include/parc ${BASE_DIR}/usr/include/
