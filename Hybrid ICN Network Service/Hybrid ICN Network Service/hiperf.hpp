@@ -38,6 +38,7 @@
 
 #define TAG_HIPERF "HiPerf"
 extern float value;
+extern utils::TimePoint when;
 
 extern "C" {
     float hiperfGetValue();

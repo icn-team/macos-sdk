@@ -19,7 +19,7 @@ final class ForwarderViewController: NSViewController, PreferencePane, NSApplica
 
 	
 	let preferencePaneIdentifier = PreferencePane.Identifier.forwarder
-	let preferencePaneTitle = "forwarder"
+	let preferencePaneTitle = "Forwarder"
 	let toolbarItemIcon = NSImage(named: NSImage.advancedName)!
 
 	let constants = Constants()
@@ -28,13 +28,13 @@ final class ForwarderViewController: NSViewController, PreferencePane, NSApplica
 	var addressesMap = [Int: String]()
 	var pathConfig: String?
 	
-	struct defaultsKeys {
-		  static let url = "url"
-		  static let hicnFwdConfiguration = "hicnFwdConfiguration"
-		  static let nextHopPort = "nextHopPort"
-		  static let nextHopIp = "nextHopIp"
-		  static let sourcePort = "sourcePort"
-	  }
+	struct defaultKeys {
+		static let url = "url"
+		static let hicnFwdConfiguration = "hicnFwdConfiguration"
+		static let nextHopPort = "nextHopPort"
+		static let nextHopIp = "nextHopIp"
+		static let sourcePort = "sourcePort"
+	}
 	
 	override var nibName: NSNib.Name? { "ForwarderViewController" }
 
@@ -99,26 +99,26 @@ final class ForwarderViewController: NSViewController, PreferencePane, NSApplica
         } else {
             hicnFwdSwitch.isEnabled = false
         }
-        if savedValues.string(forKey: defaultsKeys.sourcePort) != nil {
-            sourcePortTextField.stringValue = savedValues.string(forKey: defaultsKeys.sourcePort)!
+        if savedValues.string(forKey: defaultKeys.sourcePort) != nil {
+            sourcePortTextField.stringValue = savedValues.string(forKey: defaultKeys.sourcePort)!
         } else {
             sourcePortTextField.stringValue = String(constants.DEFAULT_SOURCE_PORT)
         }
-        if savedValues.string(forKey: defaultsKeys.nextHopIp) != nil {
-            nextHopIpTextField.stringValue = savedValues.string(forKey: defaultsKeys.nextHopIp)!
+        if savedValues.string(forKey: defaultKeys.nextHopIp) != nil {
+            nextHopIpTextField.stringValue = savedValues.string(forKey: defaultKeys.nextHopIp)!
 		} else {
 			
 			nextHopIpTextField.stringValue = String(constants.DEFAULT_NEXT_HOP_IP)
 		}
-        if savedValues.string(forKey: defaultsKeys.nextHopPort) != nil {
-            nextHopPortTextField.stringValue = savedValues.string(forKey: defaultsKeys.nextHopPort)!
+        if savedValues.string(forKey: defaultKeys.nextHopPort) != nil {
+            nextHopPortTextField.stringValue = savedValues.string(forKey: defaultKeys.nextHopPort)!
 
         } else {
 			nextHopPortTextField.stringValue = String(constants.DEFAULT_NEXT_HOP_PORT)
         }
         
-        if savedValues.string(forKey: defaultsKeys.hicnFwdConfiguration) != nil {
-			configurationTextView.string = savedValues.string(forKey: defaultsKeys.hicnFwdConfiguration)!
+        if savedValues.string(forKey: defaultKeys.hicnFwdConfiguration) != nil {
+			configurationTextView.string = savedValues.string(forKey: defaultKeys.hicnFwdConfiguration)!
         }
     }
 	
@@ -168,10 +168,10 @@ final class ForwarderViewController: NSViewController, PreferencePane, NSApplica
 
                 hicnFwdSwitch.state = NSSwitch.StateValue(0)
             } else {
-                savedValues.set(sourcePortTextField.stringValue, forKey: defaultsKeys.sourcePort)
-                savedValues.set(nextHopIpTextField.stringValue, forKey: defaultsKeys.nextHopIp)
-                savedValues.set(nextHopPortTextField.stringValue, forKey: defaultsKeys.nextHopPort)
-                savedValues.set(configurationTextView.string, forKey: defaultsKeys.hicnFwdConfiguration)
+                savedValues.set(sourcePortTextField.stringValue, forKey: defaultKeys.sourcePort)
+                savedValues.set(nextHopIpTextField.stringValue, forKey: defaultKeys.nextHopIp)
+                savedValues.set(nextHopPortTextField.stringValue, forKey: defaultKeys.nextHopPort)
+                savedValues.set(configurationTextView.string, forKey: defaultKeys.hicnFwdConfiguration)
                 sourcePortTextField.isEnabled = false
                 nextHopPortTextField.isEnabled = false
                 nextHopIpTextField.isEnabled = false
@@ -195,12 +195,13 @@ final class ForwarderViewController: NSViewController, PreferencePane, NSApplica
                 }
             }
         } else {
-			sourcePortTextField.isEnabled = false
+			sourcePortTextField.isEnabled = true
 			nextHopIpTextField.isEnabled = true
 			configurationTextView.isEditable = true
 			sourceIpPopUpButton.isEnabled = true
 			updateIpSource.isEnabled = true
             stopHicnFwd()
+			
         }
 	}
 	

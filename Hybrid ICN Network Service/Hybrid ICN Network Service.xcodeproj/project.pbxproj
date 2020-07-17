@@ -12,6 +12,12 @@
 		BD374F6624360E3900FC72EC /* libparc.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BD374F5E24360DEA00FC72EC /* libparc.dylib */; };
 		BD374F6724360E4700FC72EC /* libhicntransport.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BD374F6424360E1F00FC72EC /* libhicntransport.dylib */; };
 		BD374F6824360E5800FC72EC /* libhicn.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BD374F5A24360D9B00FC72EC /* libhicn.dylib */; };
+		BD5507C32488F1DE000B9A2F /* libhicnctrl.dylib in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BD5507C22488F1DE000B9A2F /* libhicnctrl.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		BD5507C42488F203000B9A2F /* libhicnctrl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BD5507C22488F1DE000B9A2F /* libhicnctrl.dylib */; };
+		BD90564E248A496C00218BA2 /* CLIViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BD90564D248A496C00218BA2 /* CLIViewController.xib */; };
+		BD905650248A497400218BA2 /* CLIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD90564F248A497400218BA2 /* CLIViewController.swift */; };
+		BD905652248A99BA00218BA2 /* StringTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD905651248A99BA00218BA2 /* StringTextView.swift */; };
+		BD9781A7248AA9EC0027ABF4 /* hicnControllerWrapper.c in Sources */ = {isa = PBXBuildFile; fileRef = BD9781A6248AA9EC0027ABF4 /* hicnControllerWrapper.c */; };
 		BD99B4B7243B1A400041CC7E /* libhicn.dylib in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BD99B4B5243B1A400041CC7E /* libhicn.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		BD99B4B8243B1A400041CC7E /* libhicntransport.dylib in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BD99B4B6243B1A400041CC7E /* libhicntransport.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		BD99B4BA243B1A750041CC7E /* libparc.dylib in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BD99B4B9243B1A750041CC7E /* libparc.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -19,6 +25,9 @@
 		BD99B4BE243B1A900041CC7E /* libssl.1.1.dylib in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BD99B4BC243B1A900041CC7E /* libssl.1.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		BD99B4C2243B31560041CC7E /* libevent-2.1.7.dylib in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BD99B4C1243B31560041CC7E /* libevent-2.1.7.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		BD99B4C3243B34B00041CC7E /* libevent-2.1.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BD99B4C1243B31560041CC7E /* libevent-2.1.7.dylib */; };
+		BDA1774C2486843C00B65FE0 /* hicnProxyWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BDA1774A2486843C00B65FE0 /* hicnProxyWrapper.cpp */; };
+		BDE96068248694D500BF45B9 /* HttpProxyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE96066248694D500BF45B9 /* HttpProxyViewController.swift */; };
+		BDE96069248694D500BF45B9 /* HttpProxyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BDE96067248694D500BF45B9 /* HttpProxyViewController.xib */; };
 		BDF414F924341C58000EBB41 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF414F824341C58000EBB41 /* Constants.swift */; };
 		BDF414FD2434267E000EBB41 /* RepeatingTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF414FC2434267E000EBB41 /* RepeatingTimer.swift */; };
 		BDF4150124342A8F000EBB41 /* hiperfWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BDF414FF24342A8F000EBB41 /* hiperfWrapper.cpp */; };
@@ -41,6 +50,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				BD5507C32488F1DE000B9A2F /* libhicnctrl.dylib in Embed Frameworks */,
 				BD99B4C2243B31560041CC7E /* libevent-2.1.7.dylib in Embed Frameworks */,
 				BD99B4BD243B1A900041CC7E /* libcrypto.1.1.dylib in Embed Frameworks */,
 				BD99B4BE243B1A900041CC7E /* libssl.1.1.dylib in Embed Frameworks */,
@@ -64,6 +74,12 @@
 		BD374F6224360E0C00FC72EC /* libevent.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libevent.dylib; path = ../lib/libevent.dylib; sourceTree = "<group>"; };
 		BD374F6424360E1F00FC72EC /* libhicntransport.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libhicntransport.dylib; path = ../lib/libhicntransport.dylib; sourceTree = "<group>"; };
 		BD374F692436102D00FC72EC /* libevent-2.1.7.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libevent-2.1.7.dylib"; path = "../lib/libevent-2.1.7.dylib"; sourceTree = "<group>"; };
+		BD5507C22488F1DE000B9A2F /* libhicnctrl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libhicnctrl.dylib; path = ../usr/lib/libhicnctrl.dylib; sourceTree = "<group>"; };
+		BD90564D248A496C00218BA2 /* CLIViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CLIViewController.xib; sourceTree = "<group>"; };
+		BD90564F248A497400218BA2 /* CLIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CLIViewController.swift; sourceTree = "<group>"; };
+		BD905651248A99BA00218BA2 /* StringTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringTextView.swift; sourceTree = "<group>"; };
+		BD9781A5248AA9EC0027ABF4 /* hicnControllerWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = hicnControllerWrapper.h; sourceTree = "<group>"; };
+		BD9781A6248AA9EC0027ABF4 /* hicnControllerWrapper.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = hicnControllerWrapper.c; sourceTree = "<group>"; };
 		BD99B4B5243B1A400041CC7E /* libhicn.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libhicn.dylib; path = ../usr/lib/libhicn.dylib; sourceTree = "<group>"; };
 		BD99B4B6243B1A400041CC7E /* libhicntransport.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libhicntransport.dylib; path = ../usr/lib/libhicntransport.dylib; sourceTree = "<group>"; };
 		BD99B4B9243B1A750041CC7E /* libparc.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libparc.dylib; path = ../usr/lib/libparc.dylib; sourceTree = "<group>"; };
@@ -71,10 +87,14 @@
 		BD99B4BC243B1A900041CC7E /* libssl.1.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.1.1.dylib; path = ../usr/lib/libssl.1.1.dylib; sourceTree = "<group>"; };
 		BD99B4BF243B1AAF0041CC7E /* libevent-2.1.7.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libevent-2.1.7.dylib"; path = "../usr/lib/libevent-2.1.7.dylib"; sourceTree = "<group>"; };
 		BD99B4C1243B31560041CC7E /* libevent-2.1.7.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libevent-2.1.7.dylib"; path = "../usr/lib/libevent-2.1.7.dylib"; sourceTree = "<group>"; };
+		BDA1774A2486843C00B65FE0 /* hicnProxyWrapper.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = hicnProxyWrapper.cpp; sourceTree = "<group>"; };
+		BDA1774B2486843C00B65FE0 /* hicnProxyWrapper.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = hicnProxyWrapper.hpp; sourceTree = "<group>"; };
 		BDB531BF2435DEA400B5E741 /* libhicn.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libhicn.dylib; path = "../../../../usr/local/Cellar/hicn/20.01-90-g59c4e43/lib/libhicn.dylib"; sourceTree = "<group>"; };
 		BDB531C12435DF0E00B5E741 /* libparc.1.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libparc.1.0.dylib; path = "../../../../usr/local/Cellar/libparc/1.0-74~gae07b5e/lib/libparc.1.0.dylib"; sourceTree = "<group>"; };
 		BDB531D42435EC0B00B5E741 /* libhicntransport.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libhicntransport.dylib; path = "../../../../usr/local/Cellar/hicn/20.01-91-gd27d9b5/lib/libhicntransport.dylib"; sourceTree = "<group>"; };
 		BDB531D82435EC2D00B5E741 /* libhicn.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libhicn.dylib; path = "../../../../usr/local/Cellar/hicn/20.01-91-gd27d9b5/lib/libhicn.dylib"; sourceTree = "<group>"; };
+		BDE96066248694D500BF45B9 /* HttpProxyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpProxyViewController.swift; sourceTree = "<group>"; };
+		BDE96067248694D500BF45B9 /* HttpProxyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HttpProxyViewController.xib; sourceTree = "<group>"; };
 		BDF414F824341C58000EBB41 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		BDF414FC2434267E000EBB41 /* RepeatingTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatingTimer.swift; sourceTree = "<group>"; };
 		BDF414FE24342A8F000EBB41 /* Hybrid ICN Network Service-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Hybrid ICN Network Service-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -103,6 +123,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BD5507C42488F203000B9A2F /* libhicnctrl.dylib in Frameworks */,
 				BD374F6824360E5800FC72EC /* libhicn.dylib in Frameworks */,
 				BD99B4C3243B34B00041CC7E /* libevent-2.1.7.dylib in Frameworks */,
 				BD374F6724360E4700FC72EC /* libhicntransport.dylib in Frameworks */,
@@ -143,6 +164,10 @@
 				502B68E52254944600789D9F /* PreferencesStyle+UserDefaults.swift */,
 				E34E9EED20E6149D002F8F86 /* MainMenu.xib */,
 				BDF41502243430E1000EBB41 /* hiperf.cpp */,
+				BD90564D248A496C00218BA2 /* CLIViewController.xib */,
+				BD90564F248A497400218BA2 /* CLIViewController.swift */,
+				BDE96066248694D500BF45B9 /* HttpProxyViewController.swift */,
+				BDE96067248694D500BF45B9 /* HttpProxyViewController.xib */,
 				BDF41503243430E1000EBB41 /* hiperf.hpp */,
 				E34E9EFE20E617E7002F8F86 /* HiperfViewController.swift */,
 				E34E9F0020E61A26002F8F86 /* HiperfViewController.xib */,
@@ -158,6 +183,11 @@
 				BDF414FE24342A8F000EBB41 /* Hybrid ICN Network Service-Bridging-Header.h */,
 				BDF41505243439F3000EBB41 /* forwarderWrapper.h */,
 				BDF41506243439F3000EBB41 /* forwarderWrapper.c */,
+				BDA1774A2486843C00B65FE0 /* hicnProxyWrapper.cpp */,
+				BDA1774B2486843C00B65FE0 /* hicnProxyWrapper.hpp */,
+				BD905651248A99BA00218BA2 /* StringTextView.swift */,
+				BD9781A5248AA9EC0027ABF4 /* hicnControllerWrapper.h */,
+				BD9781A6248AA9EC0027ABF4 /* hicnControllerWrapper.c */,
 			);
 			path = "Hybrid ICN Network Service";
 			sourceTree = "<group>";
@@ -173,6 +203,7 @@
 		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
+				BD5507C22488F1DE000B9A2F /* libhicnctrl.dylib */,
 				BD99B4BF243B1AAF0041CC7E /* libevent-2.1.7.dylib */,
 				BD99B4C1243B31560041CC7E /* libevent-2.1.7.dylib */,
 				BD99B4BB243B1A900041CC7E /* libcrypto.1.1.dylib */,
@@ -225,7 +256,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0940;
-				LastUpgradeCheck = 1120;
+				LastUpgradeCheck = 1140;
 				TargetAttributes = {
 					E34E9EE620E6149B002F8F86 = {
 						CreatedOnToolsVersion = 9.4.1;
@@ -263,8 +294,10 @@
 			files = (
 				E34E9EEC20E6149D002F8F86 /* Assets.xcassets in Resources */,
 				E34E9F0520E61C06002F8F86 /* ForwarderViewController.xib in Resources */,
+				BDE96069248694D500BF45B9 /* HttpProxyViewController.xib in Resources */,
 				E34E9EEF20E6149D002F8F86 /* MainMenu.xib in Resources */,
 				E34E9F0120E61A26002F8F86 /* HiperfViewController.xib in Resources */,
+				BD90564E248A496C00218BA2 /* CLIViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -334,16 +367,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BDA1774C2486843C00B65FE0 /* hicnProxyWrapper.cpp in Sources */,
 				BDF41504243430E1000EBB41 /* hiperf.cpp in Sources */,
+				BD905650248A497400218BA2 /* CLIViewController.swift in Sources */,
 				E34E9EFF20E617E7002F8F86 /* HiperfViewController.swift in Sources */,
 				BDF41507243439F3000EBB41 /* forwarderWrapper.c in Sources */,
 				BDF4150124342A8F000EBB41 /* hiperfWrapper.cpp in Sources */,
 				E34E9EEA20E6149B002F8F86 /* AppDelegate.swift in Sources */,
 				E34E9F0320E61BC0002F8F86 /* ForwarderViewController.swift in Sources */,
 				E3194E4122573FF3006FE775 /* util.swift in Sources */,
+				BD905652248A99BA00218BA2 /* StringTextView.swift in Sources */,
 				502B68E72254947B00789D9F /* PreferencesStyle+UserDefaults.swift in Sources */,
+				BDE96068248694D500BF45B9 /* HttpProxyViewController.swift in Sources */,
 				BDF414FD2434267E000EBB41 /* RepeatingTimer.swift in Sources */,
 				BDF414F924341C58000EBB41 /* Constants.swift in Sources */,
+				BD9781A7248AA9EC0027ABF4 /* hicnControllerWrapper.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -381,10 +419,11 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 48JBYTLGAT;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -398,16 +437,9 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = (
-					../usr/lib,
-					/usr/local/lib,
-					"/usr/local/opt/openssl@1.1/lib",
-					"/usr/local/Cellar/hicn/20.01-90-g59c4e43/lib",
-					"/usr/local/Cellar/libparc/1.0-74~gae07b5e/lib",
-					"/usr/local/Cellar/libparc/1.0-75~gb7be9e9/lib",
-					"/usr/local/Cellar/hicn/20.01-91-gd27d9b5/lib",
-				);
+				LIBRARY_SEARCH_PATHS = ../usr/lib;
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 1.0.6;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -416,6 +448,7 @@
 					"-framework",
 					"\"Preferences\"",
 					"-lhicn-light",
+					"-lhicnhttpproxy",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cisco.hicn.HicnForwarder.Hybrid-ICN-Network-Service";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -425,7 +458,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				SYSTEM_HEADER_SEARCH_PATHS = (
-					../../usr/include,
+					"$(SRCROOT)/../usr/include",
 					/usr/local/include,
 				);
 			};
@@ -452,10 +485,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 48JBYTLGAT;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -465,16 +499,9 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = (
-					../usr/lib,
-					/usr/local/lib,
-					"/usr/local/opt/openssl@1.1/lib",
-					"/usr/local/Cellar/hicn/20.01-90-g59c4e43/lib",
-					"/usr/local/Cellar/libparc/1.0-74~gae07b5e/lib",
-					"/usr/local/Cellar/libparc/1.0-75~gb7be9e9/lib",
-					"/usr/local/Cellar/hicn/20.01-91-gd27d9b5/lib",
-				);
+				LIBRARY_SEARCH_PATHS = ../usr/lib;
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 1.0.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -483,6 +510,7 @@
 					"-framework",
 					"\"Preferences\"",
 					"-lhicn-light",
+					"-lhicnhttpproxy",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cisco.hicn.HicnForwarder.Hybrid-ICN-Network-Service";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -490,7 +518,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "Hybrid ICN Network Service/Hybrid ICN Network Service-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				SYSTEM_HEADER_SEARCH_PATHS = (
-					../../usr/include,
+					"$(SRCROOT)/../usr/include",
 					/usr/local/include,
 				);
 			};

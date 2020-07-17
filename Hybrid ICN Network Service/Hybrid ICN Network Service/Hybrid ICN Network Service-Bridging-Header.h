@@ -3,4 +3,7 @@
 //
 
 #include "hiperfWrapper.hpp"
+#include "hicnProxyWrapper.hpp"
 #include "forwarderWrapper.h"
+#include "hicnControllerWrapper.h"
+

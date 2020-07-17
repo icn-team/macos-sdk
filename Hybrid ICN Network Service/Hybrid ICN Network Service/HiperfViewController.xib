@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -29,8 +28,8 @@
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="G5w-sz-xMo" customClass="LineChartView" customModule="Charts">
                     <rect key="frame" x="0.0" y="0.0" width="700" height="384"/>
                 </customView>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CaE-76-Xil">
-                    <rect key="frame" x="131" y="665" width="73" height="16"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CaE-76-Xil">
+                    <rect key="frame" x="131" y="664" width="73" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="hICN Prefix" id="J1s-rg-cEg">
                         <font key="font" usesAppearanceFont="YES"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -69,7 +68,7 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xW1-H2-Nrb">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xW1-H2-Nrb">
                     <rect key="frame" x="86" y="490" width="118" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="Fixed Window Size" id="fIi-KM-kkd">
                         <font key="font" usesAppearanceFont="YES"/>
@@ -85,8 +84,8 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mxw-S2-YOs">
-                    <rect key="frame" x="237" y="662" width="443" height="21"/>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Mxw-S2-YOs">
+                    <rect key="frame" x="237" y="661" width="443" height="21"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="NE9-Tx-M7g">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -183,15 +182,19 @@
                 <constraint firstAttribute="height" constant="700" id="WMo-4f-YFS"/>
                 <constraint firstItem="CaE-76-Xil" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="133" id="WOU-wz-4lK"/>
                 <constraint firstItem="Wuz-Ei-OXt" firstAttribute="top" secondItem="CaE-76-Xil" secondAttribute="bottom" constant="19" id="YCb-GI-bf7"/>
+                <constraint firstItem="r6r-7Q-WfJ" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="122" id="fRe-8d-tCd"/>
                 <constraint firstItem="TNu-NM-h7Y" firstAttribute="top" secondItem="Wje-Zl-P5w" secondAttribute="bottom" constant="27" id="gbu-zI-RNK"/>
+                <constraint firstItem="y0Y-7Q-2bh" firstAttribute="leading" secondItem="xW1-H2-Nrb" secondAttribute="trailing" constant="35" id="hHd-ug-ft4"/>
                 <constraint firstAttribute="width" constant="700" id="iNd-jI-44a"/>
                 <constraint firstItem="8PQ-Yi-ITV" firstAttribute="leading" secondItem="Wuz-Ei-OXt" secondAttribute="trailing" constant="35" id="kbG-DQ-jeQ"/>
                 <constraint firstAttribute="trailing" secondItem="G5w-sz-xMo" secondAttribute="trailing" id="kiL-8p-PbR"/>
                 <constraint firstItem="ics-cm-4lb" firstAttribute="top" secondItem="8PQ-Yi-ITV" secondAttribute="bottom" constant="13" id="lDl-JY-Ouw"/>
+                <constraint firstItem="TNu-NM-h7Y" firstAttribute="top" secondItem="IFb-cN-vkI" secondAttribute="bottom" constant="30" id="n5o-Nf-0Og"/>
                 <constraint firstItem="Wuz-Ei-OXt" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="124" id="nPB-P9-K00"/>
                 <constraint firstItem="roh-Hk-Xvz" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="146" id="p1e-5C-TvV"/>
                 <constraint firstItem="G5w-sz-xMo" firstAttribute="top" secondItem="TNu-NM-h7Y" secondAttribute="bottom" constant="20" id="rL5-JW-Vf4"/>
                 <constraint firstItem="u0Q-mZ-c7q" firstAttribute="leading" secondItem="r6r-7Q-WfJ" secondAttribute="trailing" constant="35" id="rZx-Zz-nBJ"/>
+                <constraint firstItem="xW1-H2-Nrb" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="88" id="rod-nV-s5j"/>
                 <constraint firstAttribute="trailing" secondItem="aCB-JM-ROV" secondAttribute="trailing" constant="280" id="tLw-de-tKf"/>
                 <constraint firstAttribute="trailing" secondItem="ivc-r9-iGa" secondAttribute="trailing" constant="385" id="u0u-i7-rGp"/>
                 <constraint firstItem="ivc-r9-iGa" firstAttribute="top" secondItem="ics-cm-4lb" secondAttribute="bottom" constant="14" id="vKq-4U-aB7"/>

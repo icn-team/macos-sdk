@@ -15,8 +15,14 @@
 
 #include "hiperf.hpp"
 float value = 0;
+utils::TimePoint when = utils::SteadyClock::now();
 
 float hiperfGetValue() {
+    utils::TimePoint now = utils::SteadyClock::now();
+    auto exact_duration =
+    std::chrono::duration_cast<utils::Milliseconds>(now - when);
+    if (exact_duration.count() > 1000)
+        return 0;
     return value;
 }
 
@@ -108,7 +114,6 @@ namespace transport {
                     std::stringstream ss;
                     ss << "[STOP] producer is not producing content" << std::endl;
                     std::cout <<ss.str();
-                    //__android_log_print(ANDROID_LOG_INFO, TAG_HIPERF, "%s", ss.str().c_str());
                     return;
                 }
 
@@ -119,8 +124,6 @@ namespace transport {
                        << std::endl;
                     
                     std::cout <<ss.str();
-                    //__android_log_print(ANDROID_LOG_INFO, TAG_HIPERF, "%s", ss.str().c_str());
-
                     expected_seg_ = productionSeg;
                 } else if (receivedSeg > productionSeg) {
 
@@ -129,7 +132,6 @@ namespace transport {
                        << ". Next expected packet " << productionSeg << std::endl;
                     
                     std::cout <<ss.str();
-                    //__android_log_print(ANDROID_LOG_INFO, TAG_HIPERF, "%s", ss.str().c_str());
                 }
                 return;
             }
@@ -140,8 +142,6 @@ namespace transport {
                     ss << "[LOSS] lost packet " << i << std::endl;
                     
                     std::cout <<ss.str();
-                    //__android_log_print(ANDROID_LOG_INFO, TAG_HIPERF, "%s", ss.str().c_str());
-
                     lost_packets_.insert(i);
                 }
                 expected_seg_ = receivedSeg + 1;
@@ -154,7 +154,6 @@ namespace transport {
                     ss << "[RECOVER] recovered packet " << receivedSeg << std::endl;
                     
                     std::cout <<ss.str();
-                    //__android_log_print(ANDROID_LOG_INFO, TAG_HIPERF, "%s", ss.str().c_str());
 
                     lost_packets_.erase(it);
                 } else {
@@ -163,7 +162,6 @@ namespace transport {
                        << expected_seg_ << std::endl;
                     
                     std::cout <<ss.str();
-                    //__android_log_print(ANDROID_LOG_INFO, TAG_HIPERF, "%s", ss.str().c_str());
 
                 }
                 return;
@@ -178,14 +176,12 @@ namespace transport {
                 ss << "VERIFY CONTENT" << std::endl;
 
                 std::cout <<ss.str();
-                //__android_log_print(ANDROID_LOG_INFO, TAG_HIPERF, "%s", ss.str().c_str());
 
             } else if (contentObject.getPayloadType() == PayloadType::MANIFEST) {
                 std::stringstream ss;
                 ss << "VERIFY MANIFEST" << std::endl;
 
                 std::cout <<ss.str();
-                //__android_log_print(ANDROID_LOG_INFO, TAG_HIPERF, "%s", ss.str().c_str());
             }
 
             return true;
@@ -196,7 +192,6 @@ namespace transport {
         void HIperfClient::handleTimerExpiration(ConsumerSocket &c,
                                                  const TransportStatistics &stats) {
             const char separator = ' ';
- //           const int width = 20;
 
             utils::TimePoint t2 = utils::SteadyClock::now();
             auto exact_duration =
@@ -234,7 +229,7 @@ namespace transport {
             ss << "AvgRtt: " << avg_rtt.str() << std::endl;
             
             value = bandwidthFloat;
-
+            when = utils::SteadyClock::now();
 
             std::cout <<ss.str();
 
@@ -275,7 +270,6 @@ namespace transport {
                 ss << "ERROR -- Impossible to set the size of the window." << std::endl;
 
                 std::cout <<ss.str();
-                //__android_log_print(ANDROID_LOG_ERROR, TAG_HIPERF, "%s", ss.str().c_str());
 
                 return ERROR_SETUP;
             }
@@ -296,12 +290,6 @@ namespace transport {
                 }
             }
 
-         /*   if (consumer_socket_->setSocketOption(OtherOptions::VIRTUAL_DOWNLOAD,
-                                                  configuration_.virtual_download) ==
-                SOCKET_OPTION_NOT_SET) {
-                return ERROR_SETUP;
-            }
-*/
             if (consumer_socket_->setSocketOption(
                     GeneralTransportOptions::VERIFY_SIGNATURE, configuration_.verify) ==
                 SOCKET_OPTION_NOT_SET) {
@@ -366,7 +354,6 @@ namespace transport {
         int HIperfClient::run() {
             std::stringstream ss;
             ss << "Starting download of " << configuration_.name << std::endl;
-            //__android_log_print(ANDROID_LOG_INFO, TAG_HIPERF, "%s", ss.str().c_str());
 
             std::cout <<ss.str();
             signals_.async_wait([this](const std::error_code &, const int &) {
@@ -421,7 +408,6 @@ namespace transport {
             ss << "Data successfully read" << std::endl;
 
             std::cout <<ss.str();
-            //__android_log_print(ANDROID_LOG_INFO, TAG_HIPERF, "%s", ss.str().c_str());
         }
 
         HIperfClient::Callback::Callback(HIperfClient
@@ -459,7 +445,6 @@ namespace transport {
                << std::endl;
 
             std::cout <<ss.str();
-            //(ANDROID_LOG_ERROR, TAG_HIPERF, "%s", ss.str().c_str());
             client_.io_service_.stop();
         }
 
@@ -474,13 +459,11 @@ namespace transport {
                << std::endl;
 
             std::cout <<ss.str();
-           // __android_log_print(ANDROID_LOG_INFO, TAG_HIPERF, "%s", ss.str().c_str());
             ss << "Elapsed Time: " << usec / 1000000.0 << " seconds -- "
                << (total_size * 8) * 1.0 / usec * 1.0 << " [Mbps]"
                << std::endl;
 
             std::cout <<ss.str();
-            //__android_log_print(ANDROID_LOG_ERROR, TAG_HIPERF, "%s", ss.str().c_str());
 
             client_.io_service_.stop();
         }

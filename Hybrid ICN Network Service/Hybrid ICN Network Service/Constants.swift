@@ -16,12 +16,14 @@ public class Constants {
     let FORWARDER_DISABLED = "Forwarder Disabled"
     let FORWARDER_ENABLED = "Forwarder Enabled"
     let DEFAULT_BETA = 0.99
-    let DEFAULT_HICNPREFIX = "b001::1"
+    let DEFAULT_HICNPREFIX = "http://webserver"
     let DEFAULT_DROP_FACTOR = 0.03
     let DEFAULT_LIFETIME = 1000
     let DEFAULT_WINDOW_SIZE = 100
     let DEFAULT_RTCPROTOCOL = 0
     let DEFAULT_FIXEDWINDOWSIZE = 1
     let LO_0 = "lo0"
+    let DEFAULT_HTTP_PROXY_PREFIX = "http://webserver"
+    let DEFAULT_HTTP_PROXY_LISTENING_PORT = 9091
 }
 
