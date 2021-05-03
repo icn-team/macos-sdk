@@ -201,6 +201,8 @@ update_libparc_src: init
 
 update: update_libparc_src update_hicn_src
 
+dependencies:  openssl libevent libconfig asio
+
 all: openssl libevent libconfig asio libparc hicn
 
 all_src: openssl_src libevent_src libconfig_src asio_src libparc_src hicn_src
