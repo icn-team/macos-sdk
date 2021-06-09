@@ -138,6 +138,9 @@ hicn_src: download_hicn
 	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libhicn.dylib
 	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libhicntransport.dylib
 
+hicn_package: hicn_src
+	@mkdir -p build/hicn && cd build/hicn && make package
+
 hicn: init init_hicn_tap
 	@brew install hicn
 	@cp -f /usr/local/lib/libhicn* ${BASE_DIR}/usr/lib/
