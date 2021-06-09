@@ -134,7 +134,7 @@ download_hicn: init
 	@cd ${BASE_DIR}/src && if [ ! -d hicn ]; then echo "libhicn not found"; git clone https://github.com/FDio/hicn.git; fi;
 
 hicn_src: download_hicn
-	@mkdir -p build/hicn && cd build/hicn && cmake ${BASE_DIR}/src/hicn -DCMAKE_FIND_ROOT_PATH=${BASE_DIR}/usr  -DCMAKE_INSTALL_PREFIX=${BASE_DIR}/usr -DBUILD_APPS=ON -DOPENSSL_ROOT_DIR=${BASE_DIR}/usr -DDISABLE_EXECUTABLES=ON && make -j && make install
+	@mkdir -p build/hicn && cd build/hicn && cmake ${BASE_DIR}/src/hicn -DCMAKE_FIND_ROOT_PATH=${BASE_DIR}/usr  -DCMAKE_INSTALL_PREFIX=${BASE_DIR}/usr -DBUILD_APPS=ON -DOPENSSL_ROOT_DIR=${BASE_DIR}/usr -DBUILD_UTILS=ON && make -j && make install
 	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libhicn.dylib
 	@bash ${BASE_DIR}/scripts/script.sh ${BASE_DIR}/usr/lib/libhicntransport.dylib
 
