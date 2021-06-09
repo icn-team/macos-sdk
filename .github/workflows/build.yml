@@ -35,3 +35,23 @@ jobs:
         make libparc_src
         make hicn_src
         make hicn_package
+    - name: Upload Release Asset (hicn.pkg)
+      if: github.ref == 'refs/heads/master'
+      id: upload-release-asset-hicnforwarder 
+      uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./build/hicn
+        asset_name: hicn-*-Darwin.pkg
+        asset_content_type: application/zip
+    - uses: dev-drprasad/delete-older-releases@v0.1.0
+      if: github.ref == 'refs/heads/master'
+      id: delete-older-releases
+      with:
+        repo: icn-team/macos-sdk
+        keep_latest: 3
+        delete_tags: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
