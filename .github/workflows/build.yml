@@ -54,8 +54,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./build/hicn
-        asset_name: hicn-*-Darwin.pkg
+        asset_path: ./build/hicn/hicn-*-Darwin.pkg
+        asset_name: hicn-Darwin.pkg
         asset_content_type: application/zip
     - uses: dev-drprasad/delete-older-releases@v0.1.0
       if: github.ref == 'refs/heads/master'
